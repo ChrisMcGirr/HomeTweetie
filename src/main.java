@@ -19,6 +19,7 @@ public class main {
 		
 		StatusUpdate status = new StatusUpdate(statusMsg);
 		status.setMedia(image);
+		System.out.println("Image Uploaded");
 		try {
 			twitter.updateStatus(status);
 		} catch (TwitterException e) {
