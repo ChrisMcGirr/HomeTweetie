@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Iterator;
 
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
@@ -29,9 +30,18 @@ public class main {
 			//twitter.updateStatus(status);
 			//twitter.sendDirectMessage(UserId,directMsg);
 			 ResponseList<DirectMessage> msgs = twitter.getDirectMessages();
-			 while(msgs.iterator().hasNext()){
-				 System.out.println(msgs.iterator().next().getText());
-				 msgs.iterator().remove();
+			 System.out.println("Response List size is "+ msgs.size());
+			 Iterator<DirectMessage> list = msgs.iterator();
+			 DirectMessage DM;
+			 
+			 while(list.hasNext()){
+				 DM = list.next();
+				 if(DM.getSenderScreenName().equals("McGirrSBD")){
+					 System.out.println("Message from "+DM.getSenderScreenName() +": " + DM.getText());
+				 }
+				 else{
+					// System.out.println("Message from "+DM.getSenderScreenName() +": " + DM.getText());
+				 }
 			 }
 		} catch (TwitterException e) {
 			System.out.println("Twitter network is down or unavailable");
