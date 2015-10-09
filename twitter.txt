@@ -1,4 +1,10 @@
-consumerKey = XStFFoOpQv1ooSqizUrGAW7H2
-consumerSecret = RBjpkZZGB4ISLaK7RSvCBhfhq43Mj0qkxW2lJq8zYLx0TCabeN
-accessToken = 1190927394-530AswHLWHPXyQK9z7VEG8Rl11Jzoa3Bmc2GbJ7
-accessTokenSecret = HLfCIR4wnsmvg1a7uYi7Danr95IXCvCVnQE7Gr5WB1bhp
+Twitter Account:
+Full Name: HomeTweetie
+Email: c.a.mcgirr-1@student.tudelft.nl
+Password: iot4398+
+Phone Number: +352 661 27 01 30
+
+consumerKey = Gd7LhwFERYOi4oXYbMc28K3bY
+consumerSecret = RMb0fPgQWH3Zr1kWzXSEBEUp2k9zL8dOGVAFUo0ZbyyVratI1U
+accessToken = 3907814673-Kz80Jg8SRHAFStjeiqvwLvpnX5CgTslK9rQTQls
+accessTokenSecret = 67roN00oLFcnLGG1fDPHAIqkjHJQDK9c47SwX5TLCGpdC
