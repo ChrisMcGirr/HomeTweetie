@@ -1,20 +1,20 @@
 package actions;
 
-public class readTime implements Command{
-	
+public class readWebcam implements Command{
+
 	private Receiver rcv = null;
-	private String[] name = {"time","get", null};
+	private String[] name = {"webcam", "get", "image"};
 	
-	public readTime(Receiver input){
+	public readWebcam(Receiver input){
 		this.rcv = input;
 	}
-
 	@Override
 	public void execute() {
-		rcv.getTime();		
+		rcv.getWebCamImage();
 	}
 	@Override
 	public String[] getName() {
 		return name;
 	}
+
 }

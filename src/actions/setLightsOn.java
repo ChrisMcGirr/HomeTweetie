@@ -1,17 +1,16 @@
 package actions;
 
-public class readTime implements Command{
-	
+public class setLightsOn implements Command {
+
 	private Receiver rcv = null;
-	private String[] name = {"time","get", null};
+	private String[] name = {"lights", "set", "on"};
 	
-	public readTime(Receiver input){
+	public setLightsOn(Receiver input){
 		this.rcv = input;
 	}
-
 	@Override
 	public void execute() {
-		rcv.getTime();		
+		rcv.turnOnLights();
 	}
 	@Override
 	public String[] getName() {

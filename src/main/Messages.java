@@ -14,7 +14,7 @@ public class Messages {
 	private static Messages instance = null;
 	private static Twitter twitter = null;
 	private static String UserId = "";
-	private static String breakPoint = "HomeTweetie: I have read all your messages :)";
+	public final static String breakPoint = "HomeTweetie: I have read all your messages :)";
 	private static Paging pg = null;
 	
 	protected Messages(){
@@ -49,7 +49,7 @@ public class Messages {
 					 }
 			}
 			if(lastMsg == 0){
-				twitter.sendDirectMessage(UserId, breakPoint);
+				writeDM(breakPoint);
 			}
 		} catch (TwitterException e) {
 				System.out.println("Failed to ReadDM() in Messages.java");
@@ -57,10 +57,11 @@ public class Messages {
 		}
 	}
 
-	public void writeDM(String message){
+	public static void writeDM(String message){
 		
 		try {
 			twitter.sendDirectMessage(UserId, message);
+			
 		} catch (TwitterException e) {
 			System.out.println("Failed to WriteDM() in Messages.java");
 			e.printStackTrace();
@@ -71,28 +72,53 @@ public class Messages {
 	public ArrayList<DirectMessage> readDM(){
 		
 		ArrayList<DirectMessage> messages = new ArrayList<DirectMessage>();
+		ResponseList<DirectMessage> msgs = null;
 		
-		try{	 
-			ResponseList<DirectMessage> msgs = twitter.getDirectMessages(pg);
+		try{
+			if(lastMsg !=0){
+				msgs = twitter.getDirectMessages(pg);
+			}
+			else{
+				msgs = twitter.getDirectMessages();
+			}
 			System.out.println("ReadDM(): Response List size is "+ msgs.size());
 			Iterator<DirectMessage> list = msgs.iterator();
 			DirectMessage DM;
 			while(list.hasNext()){
-					 DM = list.next();
-					 if(DM.getSenderScreenName().equals(UserId)){
+					DM = list.next();
+					if(DM.getSenderScreenName().equals(UserId)){
 						if(DM.getText().equals(breakPoint)){
 							lastMsg = DM.getId();
-							System.out.println("Last Message Id is "+lastMsg);
+							pg.setSinceId(lastMsg);
+							break;
 						}
-						messages.add(DM);
-					 }
+						else{
+							messages.add(DM);
+						}
+					}
 			}
-			writeDM(breakPoint);
 		} catch (TwitterException e) {
 				System.out.println("Failed to ReadDM() in Messages.java");
 				e.printStackTrace();
 		}
 		
 		return messages;
+	}
+	
+	private void findBreakPoint(Iterator<DirectMessage> list, ResponseList<DirectMessage> msgs){
+		DirectMessage DM;
+		while(list.hasNext()){
+			 DM = list.next();
+			 if(DM.getSenderScreenName().equals(UserId)){
+				if(DM.getText().equals(breakPoint)){
+					lastMsg = DM.getId();
+					pg.setSinceId(lastMsg);
+					System.out.println("Last Message Id is "+lastMsg);
+				}
+			 }
+		}
+		if(msgs.size() > 0){
+			writeDM(breakPoint);
+		}
 	}
 }
