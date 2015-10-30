@@ -29,10 +29,5 @@
   		<artifactId>twitter4j-media-support</artifactId>
   		<version>4.0.4</version>
   	</dependency>
-  	<dependency>
-  		<groupId>io.silverspoon</groupId>
-  		<artifactId>bulldog-parent</artifactId>
-  		<version>0.1.2</version>
-  	</dependency>
   </dependencies>
 </project>

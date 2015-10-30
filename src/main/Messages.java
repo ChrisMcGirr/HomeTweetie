@@ -14,6 +14,7 @@ public class Messages {
 	private static Messages instance = null;
 	private static Twitter twitter = null;
 	private static String UserId = "";
+	private static String UserIdHomeTweetie = "HomeTweetie";
 	public final static String breakPoint = "HomeTweetie: I have read all your messages :)";
 	private static Paging pg = null;
 	
@@ -58,9 +59,12 @@ public class Messages {
 	}
 
 	public static void writeDM(String message){
-		
+		DirectMessage dm = null;
 		try {
-			twitter.sendDirectMessage(UserId, message);
+			dm = twitter.sendDirectMessage(UserId, message);
+			if(message.equals(breakPoint)){
+				lastMsg = dm.getId();
+			}
 			
 		} catch (TwitterException e) {
 			System.out.println("Failed to WriteDM() in Messages.java");
@@ -86,15 +90,17 @@ public class Messages {
 			DirectMessage DM;
 			while(list.hasNext()){
 					DM = list.next();
-					if(DM.getSenderScreenName().equals(UserId)){
+					if(DM.getSenderScreenName().equals(UserIdHomeTweetie)){
 						if(DM.getText().equals(breakPoint)){
 							lastMsg = DM.getId();
 							pg.setSinceId(lastMsg);
 							break;
 						}
-						else{
-							messages.add(DM);
-						}
+					}
+					if(DM.getSenderScreenName().equals(UserId)){
+						messages.add(DM);
+						lastMsg = DM.getId();
+						pg.setSinceId(lastMsg);
 					}
 			}
 		} catch (TwitterException e) {
@@ -109,7 +115,7 @@ public class Messages {
 		DirectMessage DM;
 		while(list.hasNext()){
 			 DM = list.next();
-			 if(DM.getSenderScreenName().equals(UserId)){
+			 if(DM.getSenderScreenName().equals(UserIdHomeTweetie)){
 				if(DM.getText().equals(breakPoint)){
 					lastMsg = DM.getId();
 					pg.setSinceId(lastMsg);

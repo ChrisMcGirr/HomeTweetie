@@ -15,9 +15,9 @@ public class main {
 	public static void main(String[] args) {
 		
 		Twitter twitter = ConfigureTwitter.createTwitter();
-		Messages messages = Messages.getInstance(twitter, "HomeTweetie");
+		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
 		MessageListener listener = new MessageListener(messages);
-		scheduler.scheduleAtFixedRate(listener, 0, 60, TimeUnit.SECONDS);
+		scheduler.scheduleAtFixedRate(listener, 0, 65, TimeUnit.SECONDS);
 		
 	}
 	

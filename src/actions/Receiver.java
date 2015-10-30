@@ -4,32 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import main.Messages;
-import org.bulldog.beagleboneblack.BBBNames;
-import org.bulldog.core.Signal;
-import org.bulldog.core.gpio.DigitalInput;
-import org.bulldog.core.platform.Board;
-import org.bulldog.core.platform.Platform;
-import org.bulldog.core.util.BulldogUtil;
-import org.bulldog.devices.switches.Button;
-import org.bulldog.devices.switches.ButtonListener;
 
 public class Receiver {
-	private static String LED0_PATH = "/sys/class/leds/beaglebone:green:usr0";
 	private Messages messages = null;
-	Board board = Platform.createBoard();
-    DigitalInput buttonSignal = board.getPin(BBBNames.P8_12).as(DigitalInput.class);
-    Button button = new Button(buttonSignal, Signal.Low);
 	
 	public Receiver(Messages messages){
 		this.messages = messages;
-        button.addListener(new ButtonListener() {
-            public void buttonPressed() {
-                System.out.println("PRESSED");
-            }
-            public void buttonReleased() {
-                System.out.println("RELEASED");
-            }
-        });
 	}
 	
 	public void getTemperature(){
@@ -47,32 +27,10 @@ public class Receiver {
 		System.out.println("HomeTweet: Got Image");
 	}
 	public void turnOnLights(){
-		try{
-			BufferedWriter bw = new BufferedWriter( new FileWriter (LED0_PATH+"/trigger"));
-			bw.write("none");
-			bw.close();
-			bw = new BufferedWriter( new FileWriter (LED0_PATH+"/brightness"));
-			bw.write("1");
-			bw.close();
-		}
-		catch(IOException e){
-			System.out.println("Failed to access the Beaglebone LEDs");
-		}
 		messages.writeDM("HomeTweetie: lights have been turned on");
 		System.out.println("HomeTweet: Lights on");
 	}
 	public void turnOffLights(){
-		try{
-			BufferedWriter bw = new BufferedWriter( new FileWriter (LED0_PATH+"/trigger"));
-			bw.write("none");
-			bw.close();
-			bw = new BufferedWriter( new FileWriter (LED0_PATH+"/brightness"));
-			bw.write("0");
-			bw.close();
-		}
-		catch(IOException e){
-			System.out.println("Failed to access the Beaglebone LEDs");
-		}
 		messages.writeDM("HomeTweetie: lights have been turned off");
 		System.out.println("HomeTweet: Lights off");
 	}
