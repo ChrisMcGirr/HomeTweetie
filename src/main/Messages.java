@@ -4,7 +4,6 @@ import java.util.Iterator;
 import twitter4j.DirectMessage;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
-import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
@@ -72,7 +71,7 @@ public class Messages {
 		}
 	}
 	
-	@SuppressWarnings("null")
+
 	public ArrayList<DirectMessage> readDM(){
 		
 		ArrayList<DirectMessage> messages = new ArrayList<DirectMessage>();

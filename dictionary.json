@@ -1,0 +1,20 @@
+{
+  "command": {
+    "name" : "turnOnHeat",
+    "words" : [
+		{
+			"main" : "weather",
+			"associated": ["weather","cold","chilly", "cool", "brisk", "crisp", "frigid", "frosty", "frozen", "icy", "snowy", "arctic", "wintry"]
+		},
+		{
+			"main" : "home",
+			"associated" : ["home", "apartment", "family", "household", "house", "going", "staying", "heading", "get", "back", "driving", "walking", "biking", "cycling"]
+		},
+		{
+			"main" : "work",
+			"associated" : ["work", "going", "heading", "get", "back" ,"driving", "walking", "biking", "cycling"]
+		}
+      ],
+    "hashtags" : ["winter", "fall", "cold", "cloudy"]
+  }
+}

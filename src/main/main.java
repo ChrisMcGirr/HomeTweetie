@@ -1,5 +1,6 @@
 package main;
 import actions.Receiver;
+import inference.*;
 import twitter4j.Twitter;
 import actions.*;
 
@@ -14,11 +15,16 @@ public class main {
 	
 	public static void main(String[] args) {
 		
+		/*
 		Twitter twitter = ConfigureTwitter.createTwitter();
 		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
 		MessageListener listener = new MessageListener(messages);
 		scheduler.scheduleAtFixedRate(listener, 0, 65, TimeUnit.SECONDS);
+		*/
 		
+		Parser test = new Parser();
+		TurnOnHeat bb = (TurnOnHeat) test.createGraph();
+		test.printWords(bb.getAssociatedWords());
 	}
 	
 	
