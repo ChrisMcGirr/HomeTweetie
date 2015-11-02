@@ -24,7 +24,10 @@ public class main {
 		
 		Parser test = new Parser();
 		TurnOnHeat bb = (TurnOnHeat) test.createGraph();
-		test.printWords(bb.getAssociatedWords());
+		//test.printWords(bb.getAssociatedWords());
+		Inferrer infer = new Inferrer();
+		infer.initialProbability();
+		//infer.printStates();
 	}
 	
 	

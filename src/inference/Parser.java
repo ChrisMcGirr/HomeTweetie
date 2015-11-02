@@ -13,9 +13,9 @@ public class Parser {
 		JSONObject obj = new JSONObject(readFile("dictionary.json"));
 		JSONObject command = obj.getJSONObject("command");
 		JSONArray wordArray = command.getJSONArray("words");
-		words.put(command.getJSONArray("words").getJSONObject(0).get("main").toString(), returnArrayString(wordArray.getJSONObject(0).getJSONArray("associated")));
-		words.put(command.getJSONArray("words").getJSONObject(1).get("main").toString(), returnArrayString(wordArray.getJSONObject(1).getJSONArray("associated")));
-		words.put(command.getJSONArray("words").getJSONObject(2).get("main").toString(), returnArrayString(wordArray.getJSONObject(2).getJSONArray("associated")));
+		for(int i=0; i<wordArray.length(); i++){
+			words.put(command.getJSONArray("words").getJSONObject(i).get("main").toString(), returnArrayString(wordArray.getJSONObject(i).getJSONArray("associated")));
+		}
 		TurnOnHeat turnOnHeat = new TurnOnHeat(command.get("name").toString(), words, wordArray.getJSONObject(0).get("main").toString());
 		return turnOnHeat; 
 	}
