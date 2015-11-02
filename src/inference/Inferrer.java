@@ -52,15 +52,15 @@ public class Inferrer {
 		inferTask(tweet);
 		calculateTransitionCount();
 		calculateTransitionProb();
-		previousTweet = currentTweet.clone();
 		predictNextState(currentTweet, transitionProb);
+		previousTweet = currentTweet.clone();
 		printTransMatrix();
 	}
 	
 	private void predictNextState(int[] tweet, float[][] tMatrix){
 		float[] nextState = new float[currentTweet.length];
 		Arrays.fill(nextState, 0.0f);
-		
+				
 		float[] currentProb = calculateTweetProb(tweet);
 		for(int i=0; i<currentTweet.length; i++){
 			for(int j=0; j<previousTweet.length; j++){

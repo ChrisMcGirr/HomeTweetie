@@ -27,6 +27,8 @@ public class main {
 		//test.printWords(bb.getAssociatedWords());
 		Inferrer infer = new Inferrer();
 		infer.initialProbability();
+		infer.nextProbability("Today was a cold day. Can't wait to get home!");
+		infer.nextProbability("Finally got home! Time to watch some Walking Dead :P");
 		//infer.printStates();
 	}
 	
