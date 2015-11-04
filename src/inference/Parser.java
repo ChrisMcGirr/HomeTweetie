@@ -10,14 +10,21 @@ public class Parser {
 	 HashMap<String, String[]> words = new HashMap<String, String[]>();
 
 	public Task createGraph(){
-		JSONObject obj = new JSONObject(readFile("dictionary.json"));
-		JSONObject command = obj.getJSONObject("command");
-		JSONArray wordArray = command.getJSONArray("words");
-		for(int i=0; i<wordArray.length(); i++){
-			words.put(command.getJSONArray("words").getJSONObject(i).get("main").toString(), returnArrayString(wordArray.getJSONObject(i).getJSONArray("associated")));
+		try{
+			JSONObject obj = new JSONObject(readFile("dictionary.json"));
+			JSONObject command = obj.getJSONObject("command");
+			JSONArray wordArray = command.getJSONArray("words");
+			for(int i=0; i<wordArray.length(); i++){
+				words.put(command.getJSONArray("words").getJSONObject(i).get("main").toString(), returnArrayString(wordArray.getJSONObject(i).getJSONArray("associated")));
+			}
+			TurnOnHeat turnOnHeat = new TurnOnHeat(command.get("name").toString(), words, wordArray.getJSONObject(0).get("main").toString());
+			return turnOnHeat; 
 		}
-		TurnOnHeat turnOnHeat = new TurnOnHeat(command.get("name").toString(), words, wordArray.getJSONObject(0).get("main").toString());
-		return turnOnHeat; 
+		catch(JSONException e){
+			System.out.println("Execption in JSON Parser: Parser.java");
+			return null;
+		}
+		
 	}
 
 
