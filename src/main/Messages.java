@@ -38,17 +38,19 @@ public class Messages {
 			System.out.println("Init(): Response List size is "+ msgs.size());
 			Iterator<DirectMessage> list = msgs.iterator();
 			DirectMessage DM;
+			int i = 0; 
 			while(list.hasNext()){
 					 DM = list.next();
-					 if(DM.getSenderScreenName().equals(UserId)){
+					 if(DM.getSenderScreenName().equals(UserIdHomeTweetie)){
 						if(DM.getText().equals(breakPoint)){
 							lastMsg = DM.getId();
-							System.out.println("Last Message Id is "+lastMsg);
+							System.out.println("Last Message Id is " + lastMsg);
 							break;
 						}
 					 }
+					 i++;
 			}
-			if(lastMsg == 0){
+			if((lastMsg == 0 ) && (i>1)){
 				writeDM(breakPoint);
 			}
 		} catch (TwitterException e) {

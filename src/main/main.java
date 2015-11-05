@@ -25,7 +25,10 @@ public class main {
 		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
 		geoLocation location = geoLocation.getGeoLocation(twitter, "McGirrSBD");
 	
-		/*MessageListener listener = new MessageListener(messages);
+		/*
+		Twitter twitter = ConfigureTwitter.createTwitter();
+		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
+		MessageListener listener = new MessageListener(messages);
 		scheduler.scheduleAtFixedRate(listener, 0, 65, TimeUnit.SECONDS);
 		*/
 		
