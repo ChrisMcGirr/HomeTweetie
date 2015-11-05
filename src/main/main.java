@@ -20,10 +20,12 @@ public class main {
 	
 	public static void main(String[] args) {
 		
-		/*
+		
 		Twitter twitter = ConfigureTwitter.createTwitter();
 		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
-		MessageListener listener = new MessageListener(messages);
+		geoLocation location = geoLocation.getGeoLocation(twitter, "McGirrSBD");
+	
+		/*MessageListener listener = new MessageListener(messages);
 		scheduler.scheduleAtFixedRate(listener, 0, 65, TimeUnit.SECONDS);
 		*/
 		/*
