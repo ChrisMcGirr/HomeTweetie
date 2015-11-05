@@ -1,6 +1,7 @@
 package inference;
 
 import java.util.HashMap;
+import actions.Command;
 
 public class TurnOnHeat implements Task {
 
@@ -8,8 +9,8 @@ public class TurnOnHeat implements Task {
 	private HashMap<String, String[]> associatedWords = null;
 	private String rootWord = "";
 	
-	public TurnOnHeat(String command,HashMap<String, String[]> array, String root){
-		name = command;
+	public TurnOnHeat(String commandName,HashMap<String, String[]> array, String root){
+		name = commandName;
 		associatedWords = array;
 		rootWord = root;
 	}

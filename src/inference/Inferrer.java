@@ -19,6 +19,8 @@ public class Inferrer {
 	private float[][] transitionProb = null;
 	private int[] previousTweet = null;
 	private int[] currentTweet = null;
+	private float[] nextState = null;
+	private float[] currentState = null;
 	
 	public Inferrer(){
 		Parser test = new Parser();
@@ -44,7 +46,6 @@ public class Inferrer {
 		
 		calculateInitialProb();
 		calculateTransitionProb();
-		printTransMatrix();
 	}
 	
 	public void nextProbability(String tweet){
@@ -53,12 +54,20 @@ public class Inferrer {
 		calculateTransitionCount();
 		calculateTransitionProb();
 		predictNextState(currentTweet, transitionProb);
+		currentState = nextState.clone();
 		previousTweet = currentTweet.clone();
-		printTransMatrix();
 	}
-	
+	public float[] getCurrentStateProb(){
+		return currentState;
+	}
+	public int[] getCurrentState(){
+		return currentTweet;
+	}
+	public String[] getStateNames(){
+		return keyStates;
+	}
 	private void predictNextState(int[] tweet, float[][] tMatrix){
-		float[] nextState = new float[currentTweet.length];
+		nextState = new float[currentTweet.length];
 		Arrays.fill(nextState, 0.0f);
 				
 		float[] currentProb = calculateTweetProb(tweet);
@@ -67,23 +76,6 @@ public class Inferrer {
 				nextState[i] += currentProb[j]*tMatrix[i][j];
 			}
 		}
-		/*Debug Code*/
-		System.out.print("States = ");
-		for(int i=0; i<keyStates.length; i++){
-			System.out.print(keyStates[i]+", ");
-		}
-		System.out.println("");
-		System.out.print("Next State Prob = ");
-		for(int i=0; i<nextState.length; i++){
-			System.out.print(nextState[i]+", ");
-		}
-		System.out.println("");
-		System.out.print("Current Tweet = ");
-		for(int i=0; i<tweet.length; i++){
-			System.out.print(tweet[i]+", ");
-		}
-		System.out.println("");
-		
 	}
 	
 	private float[] calculateTweetProb(int[] tweet){
@@ -95,7 +87,6 @@ public class Inferrer {
 		for(int i=0; i<tweet.length; i++){
 			if(tweet[i]>0){
 				out[i] = ((float)tweet[i])/sum;
-				//out[i] = tweet[i];
 			}
 		}
 		return out;
@@ -198,21 +189,10 @@ public class Inferrer {
 	
 	public void printStates(){
 		System.out.println("States and Counts");
-		String[] keys = states.keySet().toArray(new String[states.keySet().size()]);
-		Iterator<Integer> values = states.values().iterator();
-		int total = 0;
-		while(values.hasNext()){
-			total += values.next();
+		System.out.print("States = {");
+		for(int i=0; i<keyStates.length; i++){
+			System.out.print(keyStates[i]+", ");
 		}
-		if(total > 0){
-			for(int i=0; i<keys.length; i++){
-				System.out.println(keys[i]+": "+((float)states.get(keys[i])/total));
-			}
-		}else{
-			for(int i=0; i<keys.length; i++){
-				System.out.println(keys[i]+": "+states.get(keys[i]));
-			}
-		}
-
+		System.out.println(" }");
 	}
 }

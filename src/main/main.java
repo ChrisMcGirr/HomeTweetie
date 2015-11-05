@@ -26,38 +26,15 @@ public class main {
 		MessageListener listener = new MessageListener(messages);
 		scheduler.scheduleAtFixedRate(listener, 0, 65, TimeUnit.SECONDS);
 		*/
-		/*
+		
 		Parser test = new Parser();
 		TurnOnHeat bb = (TurnOnHeat) test.createGraph();
-		//test.printWords(bb.getAssociatedWords());
 		Inferrer infer = new Inferrer();
 		infer.initialProbability();
-		infer.nextProbability("Today was a cold day. Can't wait to get home!");
-		infer.nextProbability("Finally got home! Time to watch some Walking Dead :P");
-		//infer.printStates();
-		*/
-		 // declaring object of "OpenWeatherMap" class
-        OpenWeatherMap owm = new OpenWeatherMap("");
-        owm.setApiKey("ffccc8ed983eb48e66409bf5564f9adc");
-
-        // getting current weather data for the "London" city
-        CurrentWeather cwd =null;
-		try {
-			cwd = owm.currentWeatherByCityName("Delft");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        //printing city name from the retrieved data
-        System.out.println("City: " + cwd.getCityName());
-
-        // printing the max./min. temperature
-        System.out.println("Temperature: " + cwd.getMainInstance().getMaxTemperature()
-                            + "/" + cwd.getMainInstance().getMinTemperature() + "\'F");
+		turnOnHeat command = new turnOnHeat(null);
+		Classifier classifyCommand = new Classifier(infer);
+		boolean result = classifyCommand.isValidCommand("Today was a cold day. Going home now", command);
+		System.out.println("The Result is "+result);
 	}
 	
 	

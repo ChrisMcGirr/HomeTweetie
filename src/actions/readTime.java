@@ -17,4 +17,10 @@ public class readTime implements Command{
 	public String[] getName() {
 		return name;
 	}
+
+	@Override
+	public String[] getStates() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

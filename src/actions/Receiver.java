@@ -34,4 +34,8 @@ public class Receiver {
 		messages.writeDM("HomeTweetie: lights have been turned off");
 		System.out.println("HomeTweet: Lights off");
 	}
+	public void turnHeatOn(){
+		messages.writeDM("HomeTweetie: Heating has been turned on");
+		System.out.println("HomeTweet: Heating has been turned on");
+	}
 }
