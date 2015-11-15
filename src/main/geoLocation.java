@@ -11,7 +11,17 @@ import twitter4j.TwitterException;
 
 public class geoLocation {
 	
-	public static geoLocation getGeoLocation( Twitter twitter, String UserId ){
+	private static String location = null;
+	private static String work = "TU-Campus";
+	private static Twitter twitter = null;
+	private static String UserId = null;
+	
+	public geoLocation(Twitter twitter, String UserId){
+		this.twitter = twitter;
+		this.UserId = UserId;
+	}
+	
+	public static void getGeoLocation(){
 		 try {
 			ResponseList<Status> abc = twitter.getHomeTimeline();
 			Status sineone =abc.get(0);
@@ -19,8 +29,8 @@ public class geoLocation {
 			Place myPlace = sineone.getPlace();
 			
 			// System.out.print(sineone.toString());
-			System.out.print(myGeoLocation.toString());
-			 System.out.print(myPlace.getName());
+			//System.out.print(myGeoLocation.toString());
+			location = myPlace.getName();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,12 +38,16 @@ public class geoLocation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		//query(UserID); 
-		  //query.setRpp(1); 
-		
-
-		return null;
+	}
+	
+	public static boolean isAtWork(){
+		getGeoLocation();
+		if(location.equals(work)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }

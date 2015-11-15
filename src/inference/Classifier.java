@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import actions.Command;
+import main.Weather;
+import main.geoLocation;
 
 public class Classifier {
 	
@@ -28,6 +30,7 @@ public class Classifier {
 		int[] currentState = infer.getCurrentState();
 		float[] currentProb = infer.getCurrentStateProb();
 		int[] top = findTopStates(command.getStates().length, currentProb);
+		float commandProb = 0;
 		
 		/*Check the number of top states matches the number needed by the command*/
 		/*Might be a redundant piece of code. I'll check later*/
@@ -55,7 +58,22 @@ public class Classifier {
 			}
 		}
 		if(currentStateNum==commandStates.length){
-			result = true;
+			for(int i=0; i<commandStates.length; i++){
+				if(commandProb==0){
+					commandProb = currentProb[top[i]];
+				}
+				else{
+					commandProb = commandProb+currentProb[top[i]];
+				}
+			}
+			if(geoLocation.isAtWork()){
+				if(Weather.isCold()){
+					System.out.println("Total Prob is "+commandProb);
+					if(commandProb > 0.5){
+						result = true;
+					}
+				}
+			}
 		}
 		return result;
 	}
@@ -88,7 +106,7 @@ public class Classifier {
 
 			});
 		sorted.putAll(top);
-		printMap(sorted);
+		//printMap(sorted);
 		
 		List<Integer> list = new ArrayList<Integer>();
 		Iterator queue = sorted.values().iterator();

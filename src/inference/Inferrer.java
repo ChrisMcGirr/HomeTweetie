@@ -51,8 +51,8 @@ public class Inferrer {
 	public void nextProbability(String tweet){
 		Arrays.fill(currentTweet, 0); 
 		inferTask(tweet);
-		calculateTransitionCount();
-		calculateTransitionProb();
+		//calculateTransitionCount();
+		//calculateTransitionProb();
 		predictNextState(currentTweet, transitionProb);
 		currentState = nextState.clone();
 		previousTweet = currentTweet.clone();
@@ -87,6 +87,7 @@ public class Inferrer {
 		for(int i=0; i<tweet.length; i++){
 			if(tweet[i]>0){
 				out[i] = ((float)tweet[i])/sum;
+				//System.out.println(i+" state prob is "+out[i]);
 			}
 		}
 		return out;

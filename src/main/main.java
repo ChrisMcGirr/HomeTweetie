@@ -23,22 +23,21 @@ public class main {
 		
 		Twitter twitter = ConfigureTwitter.createTwitter();
 		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
-		geoLocation location = geoLocation.getGeoLocation(twitter, "McGirrSBD");
-	
+		geoLocation geoLoc = new geoLocation(twitter, "McGirrSBD");
 		/*
 		Twitter twitter = ConfigureTwitter.createTwitter();
 		Messages messages = Messages.getInstance(twitter, "McGirrSBD");
 		MessageListener listener = new MessageListener(messages);
 		scheduler.scheduleAtFixedRate(listener, 0, 65, TimeUnit.SECONDS);
 		*/
-		
+		Weather weather = new Weather("Delft", 18);
 		Parser test = new Parser();
 		TurnOnHeat bb = (TurnOnHeat) test.createGraph();
 		Inferrer infer = new Inferrer();
 		infer.initialProbability();
 		turnOnHeat command = new turnOnHeat(null);
 		Classifier classifyCommand = new Classifier(infer);
-		boolean result = classifyCommand.isValidCommand("Today was a cold day. Going home now", command);
+		boolean result = classifyCommand.isValidCommand("Today was a cold day and rainy day. Going to go back home to a nice warm fire :P.", command);
 		System.out.println("The Result is "+result);
 	}
 	
