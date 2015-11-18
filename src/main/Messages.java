@@ -31,7 +31,10 @@ public class Messages {
 		Messages.pg = new Paging(lastMsg);
 	    return instance;
 	}
-	
+	/*
+	 * Assumes HomeTweetie has direct messages with only one other user, if there are more,
+	 * then we will have to filter to have only messages from HomeTweetie and the user. 
+	 */
 	private static void init(){
 		try{	 
 			ResponseList<DirectMessage> msgs = twitter.getDirectMessages();
@@ -45,12 +48,13 @@ public class Messages {
 						if(DM.getText().equals(breakPoint)){
 							lastMsg = DM.getId();
 							System.out.println("Last Message Id is " + lastMsg);
+							System.out.println("Last Message: "+DM.getText());
 							break;
 						}
 					 }
 					 i++;
 			}
-			if((lastMsg == 0 ) && (i>1)){
+			if((lastMsg == 0 ) || (i>0)){
 				writeDM(breakPoint);
 			}
 		} catch (TwitterException e) {
@@ -99,10 +103,10 @@ public class Messages {
 						}
 					}
 					if(DM.getSenderScreenName().equals(UserId)){
-						messages.add(DM);
-						lastMsg = DM.getId();
-						pg.setSinceId(lastMsg);
+						messages.add(DM);	
 					}
+					lastMsg = DM.getId();
+					pg.setSinceId(lastMsg);
 			}
 		} catch (TwitterException e) {
 				System.out.println("Failed to ReadDM() in Messages.java");
@@ -113,7 +117,7 @@ public class Messages {
 	}
 	
 	private void findBreakPoint(Iterator<DirectMessage> list, ResponseList<DirectMessage> msgs){
-		DirectMessage DM;
+		DirectMessage DM = null;
 		while(list.hasNext()){
 			 DM = list.next();
 			 if(DM.getSenderScreenName().equals(UserIdHomeTweetie)){
@@ -121,11 +125,14 @@ public class Messages {
 					lastMsg = DM.getId();
 					pg.setSinceId(lastMsg);
 					System.out.println("Last Message Id is "+lastMsg);
+					System.out.println("Last Message: "+DM.getText());
 				}
 			 }
 		}
 		if(msgs.size() > 0){
-			writeDM(breakPoint);
+			if(!DM.getText().equals(breakPoint)){
+				writeDM(breakPoint);
+			}
 		}
 	}
 }

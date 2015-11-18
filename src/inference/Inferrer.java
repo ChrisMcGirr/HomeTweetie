@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class Inferrer {
 	
-	private Task turnOnHeat = null;
+	private Task command = null;
 	private HashMap<String, Integer> states = new HashMap<String, Integer>();
 	private String[] keyStates = null;
 	private float[] initialProb = null;
@@ -24,28 +24,31 @@ public class Inferrer {
 	
 	public Inferrer(String dictionary){
 		Parser test = new Parser();
-		turnOnHeat = test.createGraph(dictionary);
-		keyStates = turnOnHeat.getAssociatedWords().keySet().toArray(new String[turnOnHeat.getAssociatedWords().keySet().size()]);
+		command = test.createGraph(dictionary);
+		keyStates = command.getAssociatedWords().keySet().toArray(new String[command.getAssociatedWords().keySet().size()]);
 	}
 	
-	public void initialProbability(){
-		String[] lines = parseTextFile("example.txt");
+	public void initialProbability(String tweets[]){
+		//For testing purposes
+		//String[] lines = parseTextFile("example.txt");
+		
 		transitionProb = new float[keyStates.length][keyStates.length];
 		initialProb = new float[keyStates.length];
 		currentTweet = new int[keyStates.length];
 		previousTweet = new int[keyStates.length];
 		Arrays.fill(previousTweet, 0);
 		
-		for(int i=0; i<lines.length; i++){
-			inferTask(lines[i]);
+		for(int i=0; i<tweets.length; i++){
+			inferTask(tweets[i]);
 			if(i>0){
 				calculateTransitionCount();
 			}
 			previousTweet = currentTweet.clone();
 		}
-		
 		calculateInitialProb();
 		calculateTransitionProb();
+		//System.out.println("Stochastic Transistion Matrix");
+		//printTransMatrix();
 	}
 	
 	public void nextProbability(String tweet){
@@ -99,7 +102,12 @@ public class Inferrer {
 				sum += transitionProb[i][j];
 			}
 			for(int j=0; j<previousTweet.length; j++){
-				transitionProb[i][j] = transitionProb[i][j]/sum;
+				if(transitionProb[i][j] == 0){
+					transitionProb[i][j] = 0;
+				}
+				else{
+					transitionProb[i][j] = transitionProb[i][j]/sum;
+				}
 			}
 		}
 	}
@@ -149,8 +157,8 @@ public class Inferrer {
 			/*Only look at words that are large*/
 			if(words[i].length() >= 3){
 				for(int j=0; j<keyStates.length; j++){
-					if(turnOnHeat.getAssociatedWords().containsKey(keyStates[j])){
-						String[] list = turnOnHeat.getAssociatedWords().get(keyStates[j]);
+					if(command.getAssociatedWords().containsKey(keyStates[j])){
+						String[] list = command.getAssociatedWords().get(keyStates[j]);
 						for(int k=0; k<list.length; k++){
 							if(list[k].equals(words[i].toLowerCase().replaceAll("[^a-zA-Z ]", ""))){
 								if(!states.containsKey(keyStates[j])){

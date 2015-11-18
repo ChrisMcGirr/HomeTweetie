@@ -55,7 +55,6 @@ public class geoLocation {
 	}
 	
 	public static boolean isAtWork(){
-		getGeoLocation();
 		if(location.equals(work)){
 			return true;
 		}

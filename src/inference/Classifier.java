@@ -68,7 +68,8 @@ public class Classifier {
 			}
 			if(geoLocation.isAtWork()){
 				if(Weather.isCold()){
-					System.out.println("Total Prob is "+commandProb);
+					/*If its both cold and we're at work we give an equal probability*/
+					System.out.println("Total Prob is "+ commandProb);
 					if(commandProb > 0.5){
 						result = true;
 					}

@@ -1,9 +1,16 @@
 package actions;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
+
+import com.github.sarxos.webcam.Webcam;
+
 import main.Messages;
+import twitter4j.DirectMessage;
 
 public class Receiver {
 	private Messages messages = null;
@@ -24,6 +31,19 @@ public class Receiver {
 		System.out.println("HomeTweetie: Time has been sent");
 	}
 	public void getWebCamImage(){
+		// save image to JPEG file from
+		//https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/TakePictureExample.java
+		try {
+			Webcam webcam = Webcam.getDefault();
+			webcam.open();
+			BufferedImage image = webcam.getImage();
+			ImageIO.write(image, "JPEG", new File("image.jpeg"));
+			webcam.close();
+		} catch (IOException e) {
+			System.out.println("Failed to Save Image");
+			e.printStackTrace();
+		}
+		
 		messages.writeDM("HomeTweetie: here is the image");
 		System.out.println("HomeTweet: Got Image");
 	}

@@ -54,7 +54,7 @@ public class MessageListener implements Runnable{
 			}
 			System.out.println(value);
 		}
-		if(msgList.size() > 0 && !msgList.isEmpty()){
+		if(msgList.size() > 0){
 			Messages.writeDM(Messages.breakPoint);
 		}
 	}
