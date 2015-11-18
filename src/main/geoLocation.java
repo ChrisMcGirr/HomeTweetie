@@ -40,6 +40,20 @@ public class geoLocation {
 		}
 	}
 	
+	public static void getGeoLocation(Status sineone){
+		 try {
+			GeoLocation myGeoLocation = sineone.getGeoLocation();
+			Place myPlace = sineone.getPlace();
+			
+			// System.out.print(sineone.toString());
+			//System.out.print(myGeoLocation.toString());
+			location = myPlace.getName();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
 	public static boolean isAtWork(){
 		getGeoLocation();
 		if(location.equals(work)){

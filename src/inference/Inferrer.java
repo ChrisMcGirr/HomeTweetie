@@ -22,9 +22,9 @@ public class Inferrer {
 	private float[] nextState = null;
 	private float[] currentState = null;
 	
-	public Inferrer(){
+	public Inferrer(String dictionary){
 		Parser test = new Parser();
-		turnOnHeat = test.createGraph();
+		turnOnHeat = test.createGraph(dictionary);
 		keyStates = turnOnHeat.getAssociatedWords().keySet().toArray(new String[turnOnHeat.getAssociatedWords().keySet().size()]);
 	}
 	

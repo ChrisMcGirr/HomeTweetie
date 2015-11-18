@@ -58,5 +58,9 @@ public class MessageListener implements Runnable{
 			Messages.writeDM(Messages.breakPoint);
 		}
 	}
+	
+	public Receiver getReceiver(){
+		return rcv;
+	}
 
 }

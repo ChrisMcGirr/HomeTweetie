@@ -11,16 +11,16 @@ public class Parser {
 	
 	 HashMap<String, String[]> words = new HashMap<String, String[]>();
 
-	public Task createGraph(){
+	public Task createGraph(String dictionary){
 		try{
-			JSONObject obj = new JSONObject(readFile("dictionary.json"));
+			JSONObject obj = new JSONObject(readFile(dictionary));
 			JSONObject command = obj.getJSONObject("command");
 			JSONArray wordArray = command.getJSONArray("words");
 			for(int i=0; i<wordArray.length(); i++){
 				words.put(command.getJSONArray("words").getJSONObject(i).get("main").toString(), returnArrayString(wordArray.getJSONObject(i).getJSONArray("associated")));
 			}
-			TurnOnHeat turnOnHeat = new TurnOnHeat(command.get("name").toString(), words, wordArray.getJSONObject(0).get("main").toString());
-			return turnOnHeat; 
+			Task Command = new Task(command.get("name").toString(), words, wordArray.getJSONObject(0).get("main").toString());
+			return Command; 
 		}
 		catch(JSONException e){
 			System.out.println("Execption in JSON Parser: Parser.java");

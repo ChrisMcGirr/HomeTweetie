@@ -4,6 +4,7 @@ public class readWebcam implements Command{
 
 	private Receiver rcv = null;
 	private String[] name = {"webcam", "get", "image"};
+	private String[] states = {"webcam", "get"};
 	
 	public readWebcam(Receiver input){
 		this.rcv = input;
@@ -18,8 +19,7 @@ public class readWebcam implements Command{
 	}
 	@Override
 	public String[] getStates() {
-		// TODO Auto-generated method stub
-		return null;
+		return states;
 	}
 
 }

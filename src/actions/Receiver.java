@@ -9,6 +9,7 @@ public class Receiver {
 	private Messages messages = null;
 	
 	public Receiver(Messages messages){
+		lightBulb.init_me(); //Start the phillips hue light
 		this.messages = messages;
 	}
 	
@@ -29,10 +30,12 @@ public class Receiver {
 	public void turnOnLights(){
 		messages.writeDM("HomeTweetie: lights have been turned on");
 		System.out.println("HomeTweet: Lights on");
+		lightBulb.TurnOnLights();
 	}
 	public void turnOffLights(){
 		messages.writeDM("HomeTweetie: lights have been turned off");
 		System.out.println("HomeTweet: Lights off");
+		lightBulb.TurnOnLights();
 	}
 	public void turnHeatOn(){
 		messages.writeDM("HomeTweetie: Heating has been turned on");
