@@ -23,9 +23,9 @@ public class MessageListener implements Runnable{
 	private String value = null;
 	private DirectMessage dm = null;
 	
-	public MessageListener(Messages input){
+	public MessageListener(Messages input, String userID){
 		messages = input;
-		rcv = new Receiver(messages);
+		rcv = new Receiver(messages, userID);
 		readTemperature rtr = new readTemperature(rcv);
 		readTime rtm = new readTime(rcv);
 		readWebcam rwc = new readWebcam(rcv);
