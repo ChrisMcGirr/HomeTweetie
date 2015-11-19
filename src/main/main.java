@@ -25,18 +25,31 @@ public class main {
 		
 		String userID = "McGirrSBD";
 		
-		Twitter twitter = ConfigureTwitter.createTwitter();
-		Messages messages = Messages.getInstance(twitter, userID);
-		geoLocation geoLoc = new geoLocation(twitter, userID);
+		System.out.println("Warming up PIR Sensor");
+		long start=System.currentTimeMillis();
+		long end=0;
+		while((end-start) < 5000){
+			end=System.currentTimeMillis();
+		}
+		System.out.println("Starting PIR Sensor");
+		MotionDetector test = new MotionDetector();
 		
-		Weather weather = new Weather("Delft", 18);
+		System.out.println("20 seconds left in program");
+		start=System.currentTimeMillis();
+		end=0;
+		while((end-start) < 20000){
+			end=System.currentTimeMillis();
+		}
 		/*
-		TwitterFeedListener feedListener = new TwitterFeedListener(twitter, userID);
-		scheduler.scheduleAtFixedRate(feedListener, 0, 70, TimeUnit.SECONDS);
-		*/
-		MessageListener listener = new MessageListener(messages);
-		scheduler.scheduleAtFixedRate(listener, 35, 70, TimeUnit.SECONDS);
-		
+		 * Twitter twitter = ConfigureTwitter.createTwitter();
+		 * Messages messages = Messages.getInstance(twitter, userID);
+		 * geoLocation geoLoc = new geoLocation(twitter, userID);
+		 * Weather weather = new Weather("Delft", 18);
+		 * TwitterFeedListener feedListener = new TwitterFeedListener(twitter, userID);
+		 * scheduler.scheduleAtFixedRate(feedListener, 0, 70, TimeUnit.SECONDS);
+		 * MessageListener listener = new MessageListener(messages);
+		 * scheduler.scheduleAtFixedRate(listener, 35, 70, TimeUnit.SECONDS);
+		 */
 	}
 	
 	
