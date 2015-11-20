@@ -72,6 +72,27 @@ public class Receiver {
 		messages.writeDM("HomeTweetie: here is are the links "+link);
 		System.out.println("HomeTweet: Got Image");
 	}
+	public void getWebCamImage(String status){
+		try {
+			ProcessBuilder pb = new ProcessBuilder("/home/pi/Desktop/grabImage.sh");
+			Process p = pb.start();     // Start the process.
+			p.waitFor();                // Wait for the process to finish.
+			System.out.println("Script executed successfully");
+			MediaTwitter.postImage(new File("/home/pi/Desktop/image.jpg"), status +" " + "@" + userID + " @itsmuneebyousaf");
+		} catch (Exception e) {
+			System.out.println("Failed to execute Script");
+			e.printStackTrace();
+		}
+		String[] links = MediaTwitter.getImageLink();
+		StringBuilder strBuilder = new StringBuilder();
+		for (int i = 0; i < links.length; i++){
+			   strBuilder.append( links[i] );
+		}
+		String link = strBuilder.toString();
+		
+		messages.writeDM("HomeTweetie: motion has been detected in your home. Here is the "+link);
+		System.out.println("HomeTweet: Got Image");
+	}
 	public void turnOnLights(){
 		messages.writeDM("HomeTweetie: lights have been turned on");
 		System.out.println("HomeTweet: Lights on");
