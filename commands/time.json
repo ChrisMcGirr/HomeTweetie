@@ -1,0 +1,16 @@
+{
+  "command": {
+    "name" : "time",
+    "words" : [
+		{
+			"main" : "question",
+			"associated": ["what", "how"]
+		},
+		{
+			"main" : "time",
+			"associated" : ["time", "late"]
+		}
+      ],
+    "hashtags" : ["late", "runningoutoftime"]
+  }
+}

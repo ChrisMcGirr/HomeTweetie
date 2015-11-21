@@ -23,7 +23,7 @@ public class TwitterFeedListener implements Runnable {
 		userID = name;
 		infer = new Inferrer("dictionary.json");
 		command = new turnOnHeat(null);
-		classifyHeating = new Classifier(infer);
+		classifyHeating = new Classifier(infer, command);
 	}
 	
 	public void run(){
@@ -51,7 +51,7 @@ public class TwitterFeedListener implements Runnable {
 				latestTweet = top;
 				System.out.println("Tweet Cache Successfully Updated");
 				geoLocation.getGeoLocation(top);
-				boolean result = classifyHeating.isValidCommand(top.getText(), command);
+				boolean result = classifyHeating.isValidCommand(top.getText(), true);
 				System.out.println("We have inferrence status "+result);
 				
 			}
@@ -76,7 +76,7 @@ public class TwitterFeedListener implements Runnable {
 		else{
 			System.out.println("Tweet Cache is empty");
 			cache = newList;
-			infer.initialProbability(toStringArray());
+			infer.initialProbability(toStringArray(), true);
 		}
 	}
 	

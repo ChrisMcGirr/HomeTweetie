@@ -18,13 +18,16 @@ public class Classifier {
 	private Inferrer infer = null;
 	private Command list = null;
 	private String[] states = null;
+	private Command command = null;
 	
-	public Classifier(Inferrer input){
+	public Classifier(Inferrer input, Command inputCommand){
+		command = inputCommand;
 		infer = input;
 		states = infer.getStateNames();
 	}
 	
-	public boolean isValidCommand(String tweet, Command command ){
+	/*For the heating command*/
+	public boolean isValidCommand(String tweet, boolean inferring){
 		infer.nextProbability(tweet);
 		boolean result = false;
 		int[] currentState = infer.getCurrentState();
@@ -66,15 +69,23 @@ public class Classifier {
 					commandProb = commandProb+currentProb[top[i]];
 				}
 			}
-			if(geoLocation.isAtWork()){
-				if(Weather.isCold()){
-					/*If its both cold and we're at work we give an equal probability*/
-					System.out.println("Total Prob is "+ commandProb);
-					if(commandProb > 0.5){
-						result = true;
+			if(inferring){
+				if(geoLocation.isAtWork()){
+					if(Weather.isCold()){
+						/*If its both cold and we're at work we give an equal probability*/
+						System.out.println("Total Prob is "+ commandProb);
+						if(commandProb > 0.5){
+							result = true;
+						}
 					}
 				}
 			}
+			else{
+				if(commandProb >= 1){
+					result = true;
+				}
+			}
+
 		}
 		return result;
 	}

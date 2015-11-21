@@ -4,6 +4,8 @@ public class readTemperature implements Command {
 
 	private Receiver rcv = null;
 	private String[] name = {"temperature", "get", null};
+	private String commandName = "temperature";
+	private String[] states = {"action", "question", "temperature"};
 	
 	public readTemperature(Receiver input){
 		this.rcv = input;
@@ -18,8 +20,11 @@ public class readTemperature implements Command {
 	}
 	@Override
 	public String[] getStates() {
-		// TODO Auto-generated method stub
-		return null;
+		return states;
+	}
+	@Override
+	public String getCommandName() {
+		return commandName;
 	}
 
 }

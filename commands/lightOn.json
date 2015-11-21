@@ -1,0 +1,20 @@
+{
+  "command": {
+    "name" : "time",
+    "words" : [
+		{
+			"main" : "light",
+			"associated": ["light", "lights", "bulb", "bulbs", "lamp", "lamps"]
+		},
+		{
+			"main" : "action",
+			"associated" : ["turn", "switch", "flip"]
+		},
+		{
+			"main" : "on",
+			"associated" : ["on"]
+		}
+      ],
+    "hashtags" : ["lights", "shine"]
+  }
+}

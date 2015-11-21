@@ -27,8 +27,10 @@ public class Inferrer {
 		command = test.createGraph(dictionary);
 		keyStates = command.getAssociatedWords().keySet().toArray(new String[command.getAssociatedWords().keySet().size()]);
 	}
-	
-	public void initialProbability(String tweets[]){
+	/*
+	 * Mode true = inferrer from past tweets, mode false = not inferrence
+	 */
+	public void initialProbability(String tweets[], boolean mode){
 		//For testing purposes
 		//String[] lines = parseTextFile("example.txt");
 		
@@ -38,15 +40,26 @@ public class Inferrer {
 		previousTweet = new int[keyStates.length];
 		Arrays.fill(previousTweet, 0);
 		
-		for(int i=0; i<tweets.length; i++){
-			inferTask(tweets[i]);
-			if(i>0){
-				calculateTransitionCount();
+		if(mode){
+			for(int i=0; i<tweets.length; i++){
+				inferTask(tweets[i]);
+				if(i>0){
+					calculateTransitionCount();
+				}
+				previousTweet = currentTweet.clone();
 			}
-			previousTweet = currentTweet.clone();
+			calculateInitialProb();
+			calculateTransitionProb();
 		}
-		calculateInitialProb();
-		calculateTransitionProb();
+		else{
+			/*Create Identity Matrix*/
+			Arrays.fill(transitionProb, 0.0f);
+			for(int i=0; i<keyStates.length; i++){
+				transitionProb[i][i] = 1;
+				initialProb[i] = 1.0f/((float)keyStates.length);
+			}
+		}
+
 		//System.out.println("Stochastic Transistion Matrix");
 		//printTransMatrix();
 	}

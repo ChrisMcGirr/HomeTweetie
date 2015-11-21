@@ -4,7 +4,8 @@ public class setLightsOn implements Command {
 
 	private Receiver rcv = null;
 	private String[] name = {"lights", "set", "on"};
-	private String[] states = {"on"};
+	private String commandName = "lightOn";
+	private String[] states = {"light", "action", "on"};
 	
 	public setLightsOn(Receiver input){
 		this.rcv = input;
@@ -20,5 +21,9 @@ public class setLightsOn implements Command {
 	@Override
 	public String[] getStates() {
 		return states;
+	}
+	@Override
+	public String getCommandName() {
+		return commandName;
 	}
 }

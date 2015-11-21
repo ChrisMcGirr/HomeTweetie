@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import actions.Command;
 import actions.Receiver;
+import inference.Classifier;
+import inference.Inferrer;
 import twitter4j.DirectMessage;
 
 public class MessageInterpreter {
@@ -27,8 +29,17 @@ public class MessageInterpreter {
 	private ArrayList<Command> commands = null;
 	private Command command = null;
 	
+	private ArrayList<Inferrer> inferrers = new ArrayList<Inferrer>();
+	private ArrayList<Classifier> classifiers = new ArrayList<Classifier>();
+	private String commandFolder = "commands/";
+	
+	
 	public MessageInterpreter(ArrayList<Command> input){
 		commands = input;
+		for(int i =0; i<commands.size(); i++){
+			inferrers.add(new Inferrer(commandFolder+commands.get(i).getCommandName()+".json"));
+			classifiers.add(new Classifier(inferrers.get(i), commands.get(i)));
+		}
 
 		for(int i=0; i<commands.size(); i++){
 			Command temp = commands.get(i);
@@ -52,17 +63,32 @@ public class MessageInterpreter {
 				objects.put(object[0], action);
 				
 			}
-
 		}
 	}
-
+	public boolean validCommand(String message){
+		boolean result = false;
+		for(int i=0; i< classifiers.size(); i++){
+			result = classifiers.get(i).isValidCommand(message, false);
+			if(result){
+				commands.get(i).execute();
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
 	public String getType(DirectMessage dm){
 		text = dm.getText().toLowerCase();
 		String value = null;
 		if(text.startsWith("hometweetie")){
 			partitions = text.split(" ");
 			if(partitions.length > 4){
-				return "Invalid Command";
+				if(validCommand(dm.getText())){
+					return "Valid Command";
+				}
+				else{
+					return "Invalid Command";
+				}
 			}
 			else{
 				if(partitions.length == 4){
@@ -77,17 +103,33 @@ public class MessageInterpreter {
 						return "Valid Command";
 					}
 					else{
-						return "Invalid Object";
+						if(validCommand(dm.getText())){
+							return "Valid Command";
+						}
+						else{
+							return "Invalid Command";
+						}
 					}
 				}
 				else{
-					return "Invalid Action";
+					if(validCommand(dm.getText())){
+						return "Valid Command";
+					}
+					else{
+						return "Invalid Command";
+					}
 				}
 			}
 			
 		}
-		
-		return result;
+		else{
+			if(validCommand(dm.getText())){
+				return "Valid Command";
+			}
+			else{
+				return "Invalid Command";
+			}
+		}
 	}
 	
 	public String getType(String dm){

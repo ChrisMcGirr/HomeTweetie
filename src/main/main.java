@@ -1,21 +1,10 @@
 package main;
-import actions.Receiver;
-import inference.*;
-import net.aksingh.owmjapis.CurrentWeather;
-import net.aksingh.owmjapis.OpenWeatherMap;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import actions.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import twitter4j.Twitter;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import org.json.JSONException;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.ds.v4l4j.V4l4jDriver;
@@ -52,8 +41,11 @@ public class main {
 		Weather weather = new Weather("Delft", 18);
 		MediaTwitter media = new MediaTwitter(twitter);
 		
+		/*
 		TwitterFeedListener feedListener = new TwitterFeedListener(twitter, userID);
 		scheduler.scheduleAtFixedRate(feedListener, 0, 70, TimeUnit.SECONDS);
+		*/
+		
 		MessageListener listener = new MessageListener(messages, userID);
 		scheduler.scheduleAtFixedRate(listener, 35, 70, TimeUnit.SECONDS);
 		

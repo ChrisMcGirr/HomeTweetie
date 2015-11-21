@@ -54,7 +54,7 @@ public class Messages {
 					 }
 					 i++;
 			}
-			if((lastMsg == 0 ) || (i>0)){
+			if(i>0){
 				writeDM(breakPoint);
 			}
 		} catch (TwitterException e) {

@@ -1,0 +1,16 @@
+{
+  "command": {
+    "name" : "time",
+    "words" : [
+		{
+			"main" : "webcam",
+			"associated": ["image", "webcam", "camera", "photo"]
+		},
+		{
+			"main" : "action",
+			"associated" : ["get", "send", "upload"]
+		}
+      ],
+    "hashtags" : ["whatsitlike", "whatsgoingon"]
+  }
+}
