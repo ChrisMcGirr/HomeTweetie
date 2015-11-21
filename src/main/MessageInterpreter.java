@@ -36,11 +36,14 @@ public class MessageInterpreter {
 	
 	public MessageInterpreter(ArrayList<Command> input){
 		commands = input;
+		System.out.println("Starting to create ArrayLists for commands");
 		for(int i =0; i<commands.size(); i++){
 			inferrers.add(new Inferrer(commandFolder+commands.get(i).getCommandName()+".json"));
 			classifiers.add(new Classifier(inferrers.get(i), commands.get(i)));
+			inferrers.get(i).initialProbability(null, false);
 		}
-
+		System.out.println("Finished create ArrayLists for commands");
+		
 		for(int i=0; i<commands.size(); i++){
 			Command temp = commands.get(i);
 			String[] object = temp.getName();
@@ -68,8 +71,11 @@ public class MessageInterpreter {
 	public boolean validCommand(String message){
 		boolean result = false;
 		for(int i=0; i< classifiers.size(); i++){
+			System.out.println("Trying Command "+commands.get(i).getCommandName());
 			result = classifiers.get(i).isValidCommand(message, false);
+			System.out.println("Correctly Inferred the Command");
 			if(result){
+				System.out.println("Executing the Command");
 				commands.get(i).execute();
 				result = true;
 				break;
@@ -123,6 +129,7 @@ public class MessageInterpreter {
 			
 		}
 		else{
+			System.out.println("Checking the Command since its not in correct format");
 			if(validCommand(dm.getText())){
 				return "Valid Command";
 			}

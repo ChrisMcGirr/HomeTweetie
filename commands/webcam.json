@@ -1,6 +1,6 @@
 {
   "command": {
-    "name" : "time",
+    "name" : "webcam",
     "words" : [
 		{
 			"main" : "webcam",
