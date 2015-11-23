@@ -1,6 +1,6 @@
 package actions;
 
-public class turnOnHeat implements Command{
+public class turnOnHeat extends Command{
 	
 	private Receiver rcv = null;
 	private String[] name = {"heat", "turn", "on"};

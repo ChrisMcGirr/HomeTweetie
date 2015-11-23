@@ -1,6 +1,6 @@
 package actions;
 
-public class readTemperature implements Command {
+public class readTemperature extends Command {
 
 	private Receiver rcv = null;
 	private String[] name = {"temperature", "get", null};

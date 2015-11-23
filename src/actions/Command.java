@@ -1,10 +1,22 @@
 package actions;
 
-public interface Command {
+public class Command {
 	
-	public void execute();
-	public String[] getName();
-	public String[] getStates();
-	public String getCommandName();
+	private Receiver rcv;
+	private String[] name;
+	private String commandName;
+	private String[] states;
+	
+	public void execute() {
+	}
+	public String[] getName() {
+		return null;
+	}
+	public String[] getStates() {
+		return null;
+	}
+	public String getCommandName() {
+		return null;
+	}
 
 }

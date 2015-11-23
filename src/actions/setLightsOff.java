@@ -1,6 +1,6 @@
 package actions;
 
-public class setLightsOff implements Command {
+public class setLightsOff extends Command {
 
 	private Receiver rcv = null;
 	private String[] name = {"lights", "set", "off"};

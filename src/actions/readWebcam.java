@@ -1,6 +1,6 @@
 package actions;
 
-public class readWebcam implements Command{
+public class readWebcam extends Command{
 
 	private Receiver rcv = null;
 	private String[] name = {"webcam", "get", "image"};

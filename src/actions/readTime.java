@@ -1,6 +1,6 @@
 package actions;
 
-public class readTime implements Command{
+public class readTime extends Command{
 	
 	private Receiver rcv = null;
 	private String commandName = "time";
