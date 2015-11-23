@@ -53,7 +53,6 @@ public class Inferrer {
 		}
 		else{
 			/*Create Identity Matrix*/
-			Arrays.fill(transitionProb, 0.0f);
 			for(int i=0; i<keyStates.length; i++){
 				transitionProb[i][i] = 1;
 				initialProb[i] = 1.0f/((float)keyStates.length);

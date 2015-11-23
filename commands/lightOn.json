@@ -1,6 +1,6 @@
 {
   "command": {
-    "name" : "time",
+    "name" : "lightOn",
     "words" : [
 		{
 			"main" : "light",

@@ -15,11 +15,13 @@ public class main {
 	
 	/*Used for the Webcam Capture Library from Sarxos on the Raspberry Pi
 	 * At the moment it is not used. */
+	/*
 	static {
 	    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "info");
 	    System.setProperty("org.slf4j.simpleLogger.log.com.github.sarxos.webcam.ds.v4l4j", "trace");
 	    Webcam.setDriver(new V4l4jDriver());
 	}
+	*/
 	
 	public static void main(String[] args) {
 		
