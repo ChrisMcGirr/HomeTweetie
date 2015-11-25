@@ -18,7 +18,10 @@ import twitter4j.Twitter;
 public class lightBulb {
 	private final static PHHueSDK phHueSDK = PHHueSDK.getInstance();
 	private static PHLight myLight= null;
-		
+	
+	/*Template Code for the Phillips Hue Light Bulb was taken from the developers page and adapted for our use
+	 * http://www.developers.meethue.com/documentation/getting-started
+	 * */
 	static PHSDKListener  listener = new PHSDKListener() {
 			@Override
 			public void onAccessPointsFound(List accessPoint) {
@@ -90,7 +93,10 @@ public class lightBulb {
 				
 			}
 		 }; 	
-		 
+	
+	/*
+	 * Attempts to establish a connection with the phillips hue bridge
+	 */
 	public static void init_me ()
 	{
 		phHueSDK.setDeviceName("HomeTweetie");
@@ -108,6 +114,7 @@ public class lightBulb {
 		System.out.println("Phillips Hue Light Bulb has been Initiated");
 	}
 
+	/*Changes the sate of one of the light bulbs to on*/
 	public  static void TurnOnLights() {
 		// TODO Auto-generated method stub
 		PHBridge bridge = PHHueSDK.getInstance().getSelectedBridge();
@@ -116,7 +123,7 @@ public class lightBulb {
 		bridge.updateLightState(myLight, lightState);
 		
 	}
-	
+	/*Changes the sate of one of the light bulbs to off*/
 	public static void TurnOffLights(){
 		PHBridge bridge = PHHueSDK.getInstance().getSelectedBridge();
 		PHLightState lightState = new PHLightState(); 
