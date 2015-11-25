@@ -1,5 +1,4 @@
 package main;
-import java.awt.Image;
 import java.io.File;
 
 import twitter4j.MediaEntity;
@@ -15,6 +14,10 @@ public class MediaTwitter {
 		twitter = input;
 	}
 
+	/*
+	 * Posts an Image to the Twitter feed of HomeTweetie given a path to the image
+	 * and an message to be posted with the tweet. 
+	 */
 	public static void postImage(File image, String message) throws Exception{
 	    try{
 	        StatusUpdate status = new StatusUpdate(message);
@@ -27,6 +30,11 @@ public class MediaTwitter {
 	    }
 		
 	}
+	/*
+	 * Assuming this function is called just after the image has been posted, this
+	 * returns the links of the image from the tweet and returns it in an string
+	 * array.
+	 */
 	public static String[] getImageLink(){
 		String links[] = null;
 		try {

@@ -23,6 +23,10 @@ public class MessageListener implements Runnable{
 	private String value = null;
 	private DirectMessage dm = null;
 	
+	/*
+	 * Add all the functions available to the listener and the message
+	 * interpreter. 
+	 */
 	public MessageListener(Messages input, String userID){
 		messages = input;
 		rcv = new Receiver(messages, userID);
@@ -41,6 +45,13 @@ public class MessageListener implements Runnable{
 		mi = new MessageInterpreter(commands);
 	}
 	
+	/*
+	 * Function that runs when the class is ran as a thread. Simply checks
+	 * the direct messages of HomeTweetie and sees if there are any new 
+	 * messages. If there are we call the message Interpreter and check to see
+	 * if it is a valid command. 
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run(){
 
 		msgList = messages.readDM();

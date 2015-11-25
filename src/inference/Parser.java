@@ -9,8 +9,12 @@ import actions.turnOnHeat;
 
 public class Parser {
 	
-	 HashMap<String, String[]> words = new HashMap<String, String[]>();
+	HashMap<String, String[]> words = new HashMap<String, String[]>();
 
+	/*
+	 * From the JSON object file create a Has Map of the states and their associated words. 
+	 * Simply follows the format and returns the command as a type Task. 
+	 */
 	public Task createGraph(String dictionary){
 		try{
 			JSONObject obj = new JSONObject(readFile(dictionary));
@@ -29,7 +33,9 @@ public class Parser {
 		
 	}
 
-
+	/*
+	 * Converts a JSON array to a string Array
+	 */
 	public String[] returnArrayString(JSONArray array){
 		String [] output = new String[array.length()];
 		for(int i=0; i< output.length; i++){
@@ -39,6 +45,7 @@ public class Parser {
 	}
 	
 	/*Taken from https://blog.nraboy.com/2015/03/parse-json-file-java/ */
+	/*So that we can easily read the JSON file*/
 	public static String readFile(String filename) {
 	    String result = "";
 	    try {
@@ -57,6 +64,7 @@ public class Parser {
 	    return result;
 	}
 	
+	/*Prints the HashMap with states and their associated words*/
 	public void printWords(HashMap<String, String[]> input){
 		Object[] keys = input.keySet().toArray();
 		int count = 0;

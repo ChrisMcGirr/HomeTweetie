@@ -15,15 +15,22 @@ public class MotionDetector {
     final private GpioController gpio = GpioFactory.getInstance();
     final private GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_11, PinPullResistance.PULL_UP);
 	
+    /*
+     * Constructor Method initiates and starts the motion detector thread. Simply creating a new object starts the thread.
+     * Although this should be a singleton object, it has not be implemented as such. Therefore, do not create more than
+     * one object instance. 
+     */
 	public MotionDetector(Receiver input){
 		
 		rvc = input;
 		
-        // create and register gpio pin listener
+		/*add a listener. This code was adapted from the Pi4J Example Section
+		 * http://pi4j.com/example/listener.html since the Pi4J library was used
+		 * */
         myButton.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                // display pin state on console
+            	/*When input goes high this means motion has been detected*/
             	if(event.getState().equals(event.getState().HIGH)){
             		System.out.println("Motion Detected");
             		rvc.getWebCamImage("Motion has been Detected in your home");
@@ -38,9 +45,9 @@ public class MotionDetector {
             }
             
         });
-        // stop all GPIO activity/threads by shutting down the GPIO controller
-        // (this method will forcefully shutdown all GPIO monitoring threads and scheduled tasks)
-        // gpio.shutdown();   <--- implement this method call if you wish to terminate the Pi4J GPIO controller
+
+        //Can be used to shutdown the use of the GPIOs
+        // gpio.shutdown();  
 	}
 
 }

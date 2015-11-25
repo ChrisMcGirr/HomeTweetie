@@ -18,6 +18,10 @@ public class TwitterFeedListener implements Runnable {
 	private turnOnHeat command = null;
 	private Classifier classifyHeating = null;
 	
+	/*Current this Constructor Method is only setup for one command
+	 * which is turnOnHeat, but this command has been given no receiver
+	 * so it cannot execute anything. 
+	 * */
 	public TwitterFeedListener(Twitter input, String name){
 		twitter = input;
 		userID = name;
@@ -26,6 +30,13 @@ public class TwitterFeedListener implements Runnable {
 		classifyHeating = new Classifier(infer, command);
 	}
 	
+	/*
+	 * The main loop of the thread simply checks the Home Owner's twitter feed for
+	 * new tweets. It checks to see if the latest tweet from twitter matches our cache of
+	 * tweets. Currently the cache is not size limited so if the application is run long enough
+	 * it can run out of memory. 
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run(){
 		ResponseList<Status> listTweets = null;
 		try {
@@ -58,6 +69,10 @@ public class TwitterFeedListener implements Runnable {
 		}
 	}
 	
+	/*
+	 * If there are one or more new tweets detected on the twitter feed we add them to our current
+	 * cache of tweets we store locally. Each time a new tweet is entered the initial probability is updated.
+	 */
 	public void updateCache(ResponseList<Status> newList){
 		if(cache != null){
 			System.out.println("Tweet Cache is not empty");
@@ -80,6 +95,11 @@ public class TwitterFeedListener implements Runnable {
 		}
 	}
 	
+	/*
+	 * Converts our cache of tweets into a string array so that
+	 * we can input it into the initial probability function of our
+	 * inferrer object. 
+	 */
 	private String[] toStringArray(){
 		String[] tweets = new String[cache.size()];
 		for(int i=0; i<cache.size(); i++){
@@ -88,6 +108,10 @@ public class TwitterFeedListener implements Runnable {
 		return tweets;
 	}
 	
+	/*
+	 * Simply returns the list of tweets from the user feed and
+	 * sets the latest tweet to the latest tweet from the feed.
+	 */
 	public ResponseList<Status> getUserFeed(){
 		ResponseList<Status> listTweets = null;
 		try {

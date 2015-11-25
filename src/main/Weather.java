@@ -13,6 +13,11 @@ public class Weather {
 	private static float threshold = 18;
 	private static Main weather = null;
 	
+	/*
+	 * Constructor Method that setups the weather object
+	 * and defines which city and what kind of threshold we
+	 * have. 
+	 */
 	public Weather(String City, float threshold){
 		this.threshold = (threshold*9)/5+32;
         // declaring object of "OpenWeatherMap" class
@@ -31,6 +36,10 @@ public class Weather {
        weather = cwd.getMainInstance();
 	}
 	
+	/*
+	 * Checks to see if the current temperature outside is below
+	 * the threshold we passed earlier. Returns true if it is, false otherwise.
+	 */
 	public static boolean isCold(){
        if(weather.getTemperature() <= threshold){
     	   return true;
@@ -38,5 +47,13 @@ public class Weather {
        else{
     	   return false;
        }
+	}
+	
+	/*
+	 * Returns the current temperature. This currently has to be converted from
+	 * fahrenheit to celcius as the API only gives values in fahrenheit. 
+	 */
+	public static float getTemperature(){
+		return (5*(weather.getTemperature()-32))/9;
 	}
 }

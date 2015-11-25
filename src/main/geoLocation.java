@@ -21,6 +21,10 @@ public class geoLocation {
 		this.UserId = UserId;
 	}
 	
+	/*
+	 * Updates the location of the user based on the last tweet in the
+	 * home owner's twitter feed. 
+	 */
 	public static void getGeoLocation(){
 		 try {
 			ResponseList<Status> abc = twitter.getHomeTimeline();
@@ -32,7 +36,7 @@ public class geoLocation {
 			//System.out.print(myGeoLocation.toString());
 			location = myPlace.getName();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block, which 
 			e.printStackTrace();
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
@@ -40,6 +44,10 @@ public class geoLocation {
 		}
 	}
 	
+	/*
+	 * Updates the location of the home owner based on a passed
+	 * tweet object
+	 */
 	public static void getGeoLocation(Status sineone){
 		 try {
 			GeoLocation myGeoLocation = sineone.getGeoLocation();
@@ -54,6 +62,11 @@ public class geoLocation {
 		} 
 	}
 	
+	/*
+	 * Checks to see if the current location matches the
+	 * location given as the work location. Returns true 
+	 * if it matches false otherwise. 
+	 */
 	public static boolean isAtWork(){
 		if(location.equals(work)){
 			return true;

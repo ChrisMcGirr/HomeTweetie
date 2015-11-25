@@ -21,6 +21,9 @@ public class Messages {
 
 	}
 	
+	/*
+	 * This class follows a Singleton Design Pattern, meaning only one object can ever be created.
+	 */
 	public static Messages getInstance(Twitter twitter, String UserId){
 	    if(instance == null) {
 	    	instance = new Messages();
@@ -42,6 +45,7 @@ public class Messages {
 			Iterator<DirectMessage> list = msgs.iterator();
 			DirectMessage DM;
 			int i = 0; 
+			/*Cycles through the Direct Messages checks to find the latest break point*/
 			while(list.hasNext()){
 					 DM = list.next();
 					 if(DM.getSenderScreenName().equals(UserIdHomeTweetie)){
@@ -63,6 +67,9 @@ public class Messages {
 		}
 	}
 
+	/*Writes a Direct Message to the Home Owner. Takes a string as input
+	 * and simply writes that string. If the message is the break point we 
+	 * save the message ID so that it can be used later for paging*/
 	public static void writeDM(String message){
 		DirectMessage dm = null;
 		try {
@@ -77,7 +84,12 @@ public class Messages {
 		}
 	}
 	
-
+	/*
+	 * Reads the last 20 messages or since the last message ID from HomeTweeties
+	 * Direct Messages. While it searches each message it attempts to find the last
+	 * break point and stops read the array from there. 
+	 * Returns an array list of Direct Messages. 
+	 */
 	public ArrayList<DirectMessage> readDM(){
 		
 		ArrayList<DirectMessage> messages = new ArrayList<DirectMessage>();
@@ -116,6 +128,10 @@ public class Messages {
 		return messages;
 	}
 	
+	/*
+	 * The function was created to find breakpoints in a Direct Message list. However, it is not
+	 * used. Could be useful in the future. This feature was simply included in the readDM() method
+	 */
 	private void findBreakPoint(Iterator<DirectMessage> list, ResponseList<DirectMessage> msgs){
 		DirectMessage DM = null;
 		while(list.hasNext()){

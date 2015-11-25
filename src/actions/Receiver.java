@@ -11,6 +11,7 @@ import com.github.sarxos.webcam.Webcam;
 
 import main.MediaTwitter;
 import main.Messages;
+import main.Weather;
 import twitter4j.DirectMessage;
 import twitter4j.Twitter;
 
@@ -26,7 +27,7 @@ public class Receiver {
 	}
 	
 	public void getTemperature(){
-		messages.writeDM("HomeTweetie: the temperature is 23^C");
+		messages.writeDM("HomeTweetie: The current temperature outside is " + Weather.getTemperature() +"^C");
 		System.out.println("HomeTweetie: Get Temperature!");
 	}
 	public void getTime(){
@@ -101,7 +102,7 @@ public class Receiver {
 	public void turnOffLights(){
 		messages.writeDM("HomeTweetie: lights have been turned off");
 		System.out.println("HomeTweet: Lights off");
-		lightBulb.TurnOnLights();
+		lightBulb.TurnOffLights();
 	}
 	public void turnHeatOn(){
 		messages.writeDM("HomeTweetie: Heating has been turned on");

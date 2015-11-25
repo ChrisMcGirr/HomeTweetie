@@ -40,6 +40,7 @@ public class Inferrer {
 		previousTweet = new int[keyStates.length];
 		Arrays.fill(previousTweet, 0);
 		
+		/*Calculate the matrices and vectors using past information*/
 		if(mode){
 			for(int i=0; i<tweets.length; i++){
 				inferTask(tweets[i]);
@@ -51,6 +52,9 @@ public class Inferrer {
 			calculateInitialProb();
 			calculateTransitionProb();
 		}
+		/*Use an Identity Matrix to represent past information
+		 * Set initial prob to uniform distribution over all states.
+		 * */
 		else{
 			/*Create Identity Matrix*/
 			for(int i=0; i<keyStates.length; i++){
@@ -63,6 +67,8 @@ public class Inferrer {
 		//printTransMatrix();
 	}
 	
+	/*Calculate the next state probability based on the current
+	 * and the transition matrix*/
 	public void nextProbability(String tweet){
 		Arrays.fill(currentTweet, 0); 
 		inferTask(tweet);
@@ -75,6 +81,7 @@ public class Inferrer {
 		currentState = nextState.clone();
 		previousTweet = currentTweet.clone();
 	}
+	
 	public float[] getCurrentStateProb(){
 		return currentState;
 	}
@@ -84,6 +91,11 @@ public class Inferrer {
 	public String[] getStateNames(){
 		return keyStates;
 	}
+	
+	/*
+	 * Actual computation of the next state probability with respect to the current tweet.
+	 * Simply multiple the transistion matrix and the current probability vector. 
+	 * */
 	private void predictNextState(int[] tweet, float[][] tMatrix){
 		nextState = new float[currentTweet.length];
 		Arrays.fill(nextState, 0.0f);
@@ -96,6 +108,10 @@ public class Inferrer {
 		}
 	}
 	
+	/*
+	 * Given a state vector from a tweet, which is the number of times a state
+	 * occurs in that tweet calculate the probability from that. 
+	 */
 	private float[] calculateTweetProb(int[] tweet){
 		float sum=0;
 		float[] out = new float[tweet.length];
@@ -109,6 +125,10 @@ public class Inferrer {
 		}
 		return out;
 	}
+	/*
+	 * Given the transition matrix as a state transition convert it into a stochastic matrix
+	 * by simple dividing each element by the sum of the row. 
+	 */
 	private void calculateTransitionProb(){
 		for(int i=0; i<currentTweet.length; i++){
 			float sum = 0;
@@ -125,6 +145,9 @@ public class Inferrer {
 			}
 		}
 	}
+	/*
+	 * This creates the state transition matrix which contains integer values.
+	 */
 	private void calculateTransitionCount(){
 		for(int i=0; i<currentTweet.length; i++){
 			for(int j=0; j<previousTweet.length; j++){
@@ -137,6 +160,9 @@ public class Inferrer {
 		}
 	}
 	
+	/*
+	 * Print the transition matrix for debugging purposes.
+	 */
 	private void printTransMatrix(){
 		System.out.println("Transition Matrix");
 		for(int i=0; i<currentTweet.length; i++){
@@ -146,6 +172,9 @@ public class Inferrer {
 			System.out.println("");
 		}
 	}
+	/*
+	 * Calculates the initial probability
+	 */
 	private void calculateInitialProb(){
 		String[] keys = states.keySet().toArray(new String[states.keySet().size()]);
 		Iterator<Integer> values = states.values().iterator();
@@ -164,6 +193,9 @@ public class Inferrer {
 		}
 	}
 	
+	/*
+	 * Given a tweet count the amount of times a state occurs in that tweet and save it as a state vector.
+	 */
 	public void inferTask(String text){
 		Arrays.fill(currentTweet, 0); 
 		String[] words = text.split(" ");
@@ -191,6 +223,10 @@ public class Inferrer {
 		}
 	}
 	
+	/*
+	 * Used for debugging, rather then submitting real tweets, text files with tweets per line
+	 * were used for testing. Parses a file and returns the lines as a string Array
+	 */
 	public String[] parseTextFile(String path){
 		ArrayList<String> out = new ArrayList<String>();
 		
@@ -210,6 +246,9 @@ public class Inferrer {
 		return out.toArray(new String[out.size()]);
 	}
 	
+	/*
+	 * Print all the states occurring and their count
+	 */
 	public void printStates(){
 		System.out.println("States and Counts");
 		System.out.print("States = {");

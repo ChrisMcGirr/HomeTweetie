@@ -5,7 +5,7 @@ public class readTemperature extends Command {
 	private Receiver rcv = null;
 	private String[] name = {"temperature", "get", null};
 	private String commandName = "temperature";
-	private String[] states = {"action", "question", "temperature"};
+	private String[] states = { "question", "temperature"};
 	
 	public readTemperature(Receiver input){
 		this.rcv = input;

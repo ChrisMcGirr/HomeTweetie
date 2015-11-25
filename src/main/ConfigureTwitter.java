@@ -5,6 +5,11 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class ConfigureTwitter {
 	
+	/*
+	 * Here is where you set the credentials of the twitter application. These keys
+	 * are taken from the Twitter Dev Panel. Make sure if HomeTweetie is a different
+	 * account, that these values are changed. 
+	 */
 	private static ConfigurationBuilder configureTwitterCredentials(){
 		System.out.println("Twitter Configuration Started");
 		ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -17,6 +22,9 @@ public class ConfigureTwitter {
 		return cb;
 	  }
 	
+	/*
+	 * Simply creates the twitter instance where all operations to twitter can be done.
+	 */
 	public static Twitter createTwitter(){
 		ConfigurationBuilder cb = ConfigureTwitter.configureTwitterCredentials();
 		TwitterFactory tf = new TwitterFactory(cb.build());

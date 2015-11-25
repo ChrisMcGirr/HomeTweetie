@@ -26,7 +26,10 @@ public class Classifier {
 		states = infer.getStateNames();
 	}
 	
-	/*For the heating command*/
+	/*Checks whether the command in this object matches a tweet based on the inferrer for
+	 * this command. Note we also pass a boolean to set which mode the object is in. True means
+	 * past history will be used to estimate whether it is a valid command. False means no prior
+	 * history will be used.*/
 	public boolean isValidCommand(String tweet, boolean inferring){
 		infer.nextProbability(tweet);
 		boolean result = false;
@@ -36,7 +39,7 @@ public class Classifier {
 		float commandProb = 0;
 		
 		/*Check the number of top states matches the number needed by the command*/
-		/*Might be a redundant piece of code. I'll check later*/
+		/*Might be a redundant piece of code.*/
 		String[] commandStates = command.getStates();
 		int matchNum = 0;
 		if(top.length >= commandStates.length ){
@@ -48,6 +51,7 @@ public class Classifier {
 				}
 			}
 		}
+		/*If the number of states occurring matches the command state length then we can continue*/
 		int currentStateNum = 0;
 		if(matchNum==commandStates.length){
 			for(int i=0; i< currentState.length; i++){
@@ -60,6 +64,7 @@ public class Classifier {
 				}
 			}
 		}
+		/*We start adding the probabilities of each state together*/
 		if(currentStateNum==commandStates.length){
 			for(int i=0; i<commandStates.length; i++){
 				if(commandProb==0){
@@ -69,6 +74,7 @@ public class Classifier {
 					commandProb = commandProb+currentProb[top[i]];
 				}
 			}
+			/*If we are in inferring mode check if we're at work and weather is cold*/
 			if(inferring){
 				if(geoLocation.isAtWork()){
 					if(Weather.isCold()){
@@ -81,6 +87,8 @@ public class Classifier {
 				}
 			}
 			else{
+				/*For none inferring mode all the state probabilities need to sum to one for this
+				 * to be a matching command.*/
 				if(commandProb >= 1){
 					result = true;
 				}
@@ -90,7 +98,8 @@ public class Classifier {
 		return result;
 	}
 	
-	/*Finds the top two states*/
+	/*Finds the top states, state with highest probability, with respect to the command state length. As each command could
+	 * having varying lengths.*/
 	private int[] findTopStates(int commandStateNum, float[] currentProb){
 		Map<Float, List<Integer>> top = new HashMap<Float, List<Integer>>();
 		for(int i=0; i<currentProb.length; i++){
@@ -141,6 +150,7 @@ public class Classifier {
 		return result;
 	}
 	
+	/*Prints out the states and their probability. Used for Debugging*/
 	private void printMap(Map<Float, List<Integer>> input){
 		for (Map.Entry<Float, List<Integer>> entry : input.entrySet()) {
 			System.out.println("Key : " + entry.getKey() 
